@@ -3,6 +3,7 @@
 module.exports = ({strapi}) => ({
   SSO_TYPE_GOOGLE: '1',
   SSO_TYPE_COGNITO: '2',
+  SSO_TYPE_RELATIONSHOP: '3',
   ssoRoles() {
     return [{
       'oauth-type': this.SSO_TYPE_GOOGLE,
@@ -10,6 +11,9 @@ module.exports = ({strapi}) => ({
     }, {
       'oauth-type': this.SSO_TYPE_COGNITO,
       name: 'Cognito'
+    }, {
+      'oauth-type': this.SSO_TYPE_RELATIONSHOP,
+      name: 'Relationshop'
     }]
   },
   async googleRoles() {
@@ -24,6 +28,13 @@ module.exports = ({strapi}) => ({
       .query('plugin::strapi-plugin-sso.roles')
       .findOne({
         'oauth-type': this.SSO_TYPE_COGNITO
+      })
+  },
+  async relationshopRoles() {
+    return await strapi
+      .query('plugin::strapi-plugin-sso.roles')
+      .findOne({
+        'oauth-type': this.SSO_TYPE_RELATIONSHOP
       })
   },
   async find() {

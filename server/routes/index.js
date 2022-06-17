@@ -33,6 +33,22 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/relationshop',
+    handler: 'relationshop.relationshopSignIn',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/relationshop/callback',
+    handler: 'relationshop.relationshopSignInCallback',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
     path: '/sso-roles',
     handler: 'role.find'
   },
