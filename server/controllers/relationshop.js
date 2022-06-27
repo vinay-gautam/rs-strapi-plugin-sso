@@ -48,7 +48,7 @@ async function relationshopSignIn(ctx) {
   const state = openId.generators.state();
 
   // Store Code Verifier with key is State
-  nodeCache.set(`sso:${state}`, codeVerifier, 5 * 60); // 1 min
+  nodeCache.set(`sso:${state}`, codeVerifier, 5 * 60); // 5 mins
   
   const url = `${endpoint}?client_id=${config["RS_OAUTH_CLIENT_ID"]}&redirect_uri=${redirectUri}&scope=${OAUTH_SCOPE}&response_type=${OAUTH_RESPONSE_TYPE}&code_challenge_method=${OATH_CODE_CHALLENGE_METHOD}&code_challenge=${codeChallenge}&nonce=${nonce}&state=${state}`;
   ctx.set("Location", url);
@@ -63,12 +63,16 @@ async function relationshopSignInCallback(ctx) {
   const roleService = strapi.plugin("strapi-plugin-sso").service("role");
 
   if (!ctx.query.code) {
-    return ctx.send(oauthService.renderSignUpError(`code Not Found`));
+    return ctx.send(oauthService.renderSignUpError(`Code Not Found`));
   }
 
   const codeVerifier = nodeCache.take(`sso:${ctx.query.state}`);
+  
+  // Invalid or user logged in
   if (!codeVerifier) {
-    return ctx.send(oauthService.renderSignUpError(`code verifier Not Found`));
+    const url = "/admin";
+    ctx.set("Location", url);
+    return ctx.send({}, 301);
   }
 
   const params = new URLSearchParams();
@@ -98,7 +102,16 @@ async function relationshopSignInCallback(ctx) {
       throw new Error("User not found.");
     }
 
-    const dbUser = await userService.findOneByEmail(userResponse.data.Email);
+    const {
+      Email,
+      FirstName,
+      LastName,
+      email,
+      given_name,
+      family_name
+    } = userResponse.data;
+
+    const dbUser = await userService.findOneByEmail(Email || email);
     let activateUser;
     let jwtToken;
 
@@ -117,10 +130,11 @@ async function relationshopSignInCallback(ctx) {
       const defaultLocale = oauthService.localeFindByHeader(
         ctx.request.headers
       );
+
       activateUser = await oauthService.createUser(
-        userResponse.data.Email,
-        userResponse.data.FirstName,
-        userResponse.data.LastName,
+        Email || email,
+        FirstName || given_name,
+        LastName || family_name,
         defaultLocale,
         roles
       );
