@@ -49,6 +49,12 @@ module.exports = ({env}) => ({
       COGNITO_OAUTH_DOMAIN: '[OAuth Domain created in AWS Cognito]',
       COGNITO_OAUTH_REDIRECT_URI: 'http://localhost:1337/strapi-plugin-sso/cognito/callback', //  // URI after successful login
       COGNITO_OAUTH_REGION: 'ap-northeast-1', // AWS Cognito Region 
+
+      // Relationshop ID4
+      RS_OAUTH_CLIENT_ID: '[Client ID created in AWS Cognito]',
+      RS_OAUTH_CLIENT_SECRET: '[Client Secret created in AWS Cognito]',
+      RS_OAUTH_DOMAIN: '[OAuth Domain created in AWS Cognito]',
+      RS_OAUTH_REDIRECT_URI: 'http://localhost:1337/strapi-plugin-sso/relationshop/callback', //  // URI 
     }
   }
 })

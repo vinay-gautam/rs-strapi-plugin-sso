@@ -20,13 +20,12 @@
     "Google",
     "Cognito"
   ],
-  "peerDependencies": {
-    "@strapi/strapi": "4.x"
-  },
   "dependencies": {
+    "axios": "^1.1.3",
     "generate-password": "^1.7.0",
     "node-cache": "^5.1.2",
-    "openid-client": "^5.1.6"
+    "openid-client": "^5.1.6",
+    "uuid": "^9.0.0"
   },
   "author": "yasudacloud (https://github.com/lnkhanh/rs-strapi-plugin-sso)",
   "repository": {
@@ -47,7 +46,8 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^8.14.0",
-    "jest": "^28.0.3"
+    "jest": "^28.0.3",
+    "@strapi/strapi": "4.x"
   },
   "jest": {
     "testPathIgnorePatterns": [
