@@ -1,8 +1,10 @@
 'use strict';
 const axios = require("axios");
 const {v4} = require('uuid');
-const {getService} = require("@strapi/admin/server/utils");
 
+const getService = (name) => {
+  return strapi.plugin('users-permissions').service(name);
+};
 const configValidation = () => {
   const config = strapi.config.get('plugin.strapi-plugin-sso')
   if (config['COGNITO_OAUTH_CLIENT_ID'] && config['COGNITO_OAUTH_CLIENT_SECRET'] && config['COGNITO_OAUTH_DOMAIN']) {

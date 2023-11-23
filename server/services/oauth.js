@@ -1,6 +1,9 @@
-const {getService} = require("@strapi/admin/server/utils");
 const strapiUtils = require('@strapi/utils');
 const generator = require('generate-password');
+
+const getService = (name) => {
+  return strapi.plugin('users-permissions').service(name);
+};
 
 module.exports = ({strapi}) => ({
   async createUser(email, lastname, firstname, locale, roles = []) {

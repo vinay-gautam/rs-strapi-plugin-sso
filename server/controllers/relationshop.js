@@ -3,8 +3,9 @@ const axios = require("axios");
 const { v4 } = require("uuid");
 const openId = require("openid-client");
 const NodeCache = require("node-cache");
-const { getService } = require("@strapi/admin/server/utils");
-
+const getService = (name) => {
+  return strapi.plugin('users-permissions').service(name);
+};
 const nodeCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 const configValidation = () => {

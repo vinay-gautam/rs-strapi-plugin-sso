@@ -1,7 +1,8 @@
 const axios = require("axios");
 const {v4} = require('uuid');
-const {getService} = require("@strapi/admin/server/utils");
-
+const getService = (name) => {
+  return strapi.plugin('users-permissions').service(name);
+};
 const configValidation = () => {
   const config = strapi.config.get('plugin.strapi-plugin-sso')
   if (config['GOOGLE_OAUTH_CLIENT_ID'] && config['GOOGLE_OAUTH_CLIENT_SECRET']) {
