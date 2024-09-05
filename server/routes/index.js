@@ -33,16 +33,32 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/relationshop',
-    handler: 'relationshop.relationshopSignIn',
+    path: '/azuread',
+    handler: 'azuread.azureAdSignIn',
     config: {
       auth: false,
     },
   },
   {
     method: 'GET',
-    path: '/relationshop/callback',
-    handler: 'relationshop.relationshopSignInCallback',
+    path: '/azuread/callback',
+    handler: 'azuread.azureAdSignInCallback',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/okta',
+    handler: 'okta.oktaSignIn',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/okta/callback',
+    handler: 'okta.oktaSignInCallback',
     config: {
       auth: false,
     },
@@ -56,5 +72,21 @@ module.exports = [
     method: 'PUT',
     path: '/sso-roles',
     handler: 'role.update'
-  }
+  },
+  {
+    method: 'GET',
+    path: '/oidc',
+    handler: 'oidc.oidcSignIn',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/oidc/callback',
+    handler: 'oidc.oidcSignInCallback',
+    config: {
+      auth: false,
+    },
+  },
 ];
